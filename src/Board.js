@@ -151,12 +151,23 @@
     // test if any major diagonals on this board contain conflicts
     hasAnyMajorDiagonalConflicts: function(){
       var n = this.get('n');
+      var matrix = this.rows();
       for (var i = 0; i < n; i++) {
         if (this.hasMajorDiagonalConflictAt(i)) {
           return true;
         }
       }
-
+      for(var x = 1; x < n-1; x++){
+        var count = 0;
+        for(var j = 0; j < n; j++){
+          if(matrix[j+x] && matrix[j+x][j]){
+            count++;
+          }
+          if(count > 1){
+            return true;
+          }
+        }
+      }
       return false; // fixme
     },
 
@@ -182,9 +193,22 @@
     // test if any minor diagonals on this board contain conflicts
     hasAnyMinorDiagonalConflicts: function(){
       var n = this.get('n');
+      var matrix = this.rows();
       for (var i = 0; i < n; i++) {
         if (this.hasMinorDiagonalConflictAt(i)) {
           return true;
+        }
+      }
+
+      for(var x = 1; x < n-1; x++){
+        var count = 0;
+        for(var j = 0; j < n; j++){
+          if(matrix[j+x] && matrix[j+x][n-j-1]){
+            count++;
+          }
+          if(count > 1){
+            return true;
+          }
         }
       }
       return false; // fixme
